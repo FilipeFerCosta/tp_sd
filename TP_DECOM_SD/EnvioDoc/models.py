@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from simple_history.models import HistoricalRecords
 
 def validar_ano(value):
     if value < 1900 or value > 2024:
@@ -15,6 +16,7 @@ class Documento(models.Model):
     data_publicacao = models.PositiveIntegerField(validators=[validar_ano])
     revista = models.CharField(max_length=255)
     arquivo = models.FileField(upload_to='documentos/')
+    history = HistoricalRecords()
     
     def __str__(self):
         return self.titulo
