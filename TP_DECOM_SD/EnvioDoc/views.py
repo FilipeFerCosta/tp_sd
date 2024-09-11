@@ -19,7 +19,7 @@ class Atualizar_forms(UpdateView):
     model = Documento 
     form_class = DocumentoForm 
     template_name = 'apps/EnvioDoc/editar_documento.html'
-    success_url = reverse_lazy('index') 
+    success_url = reverse_lazy('busca_documentos') 
 
 
     def historico_alteracao(self, **kwargs):

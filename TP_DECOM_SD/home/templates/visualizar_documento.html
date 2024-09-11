@@ -32,9 +32,11 @@
         </p>
         <a href="{{ item.arquivo.url }}" download>Download</a>
       {% endif %}
-      
+        <br>
         <a href="{% url 'deletar_documento' item.id %}">Excluir Documento</a>
-
+        <br>
+        <a href="{% url 'editar_artigo' item.id %}">Editar Documento</a>
+        <br>
     {% endfor %}
     <a href="{% url 'busca_documentos' %}">Voltar à busca</a>
   </main>
