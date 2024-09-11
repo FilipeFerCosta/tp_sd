@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizar Documento</title>
+</head>
+<body>
+  <header>
+    <h1>Documento</h1>
+  </header>
+  <main>
+    {% for item in documento %}
+      <h2>{{ item.titulo }}</h2>
+      <p>
+        <strong>Autor:</strong> {{ item.autores }}
+      </p>
+      <p>
+        <strong>Data de Publicação:</strong> {{ item.data_publicacao }}
+      </p>
+      <p>
+        <strong>Resumo:</strong>
+      </p>
+      <p>{{ item.resumo }}</p>
+      <p>
+        <strong>Palavras-chave:</strong>
+      </p>
+      <p>{{ item.palavras_chave }}</p>
+      {% if item.arquivo %}
+        <p>
+          <strong>Arquivo:</strong>
+        </p>
+        <a href="{{ item.arquivo.url }}" download>Download</a>
+      {% endif %}
+      
+        <a href="{% url 'deletar_documento' item.id %}">Excluir Documento</a>
+
+    {% endfor %}
+    <a href="{% url 'busca_documentos' %}">Voltar à busca</a>
+  </main>
+</body>
+</html>
