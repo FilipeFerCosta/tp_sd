@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'TP_DECOM_SD.EnvioDoc',
     'TP_DECOM_SD.home',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
