@@ -1,10 +1,8 @@
 from django.urls import path
-from . import views
+from .views import DocumentoListView, DocumentoDetailView, DocumentoDeleteView
 
 urlpatterns = [
-    path('', views.index, name='busca_documentos'),
-    path('/<int:documento_id>/', views.visualizar_documento, name='visualizar_documento'),
-    path('/<int:documento_id>/deletar/', views.deletar_documento, name='deletar_documento'),
-
+    path('', DocumentoListView.as_view(), name='busca_documentos'),
+    path('documento/<int:documento_id>/', DocumentoDetailView.as_view(), name='visualizar_documento'),
+    path('documento/<int:documento_id>/deletar/', DocumentoDeleteView.as_view(), name='deletar_documento'),
 ]
-

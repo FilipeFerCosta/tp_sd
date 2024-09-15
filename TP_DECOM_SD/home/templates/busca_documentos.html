@@ -7,10 +7,12 @@
     <h1>Busca de Documentos</h1>
 
     <form method="GET">
-        <input type="text" name="q" placeholder="Digite o termo de busca..." value="{{ query }}">
+        <!-- Input de busca -->
+        <input type="text" name="q" id="query" placeholder="Digite o termo de busca..." value="{{ query }}">
         
+        <!-- Campo de ordenação -->
         <label for="ordenacao">Ordenar por:</label>
-        <select name="ordenacao">
+        <select name="ordenacao" id="ordenacao">
             <option value="titulo" {% if ordenacao == "titulo" %}selected{% endif %}>Título</option>
             <option value="data_publicacao" {% if ordenacao == "data_publicacao" %}selected{% endif %}>Data de Publicação</option>
         </select>
