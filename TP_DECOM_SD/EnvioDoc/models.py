@@ -16,8 +16,8 @@ class Documento(models.Model):
     data_publicacao = models.PositiveIntegerField(validators=[validar_ano])
     revista = models.CharField(max_length=255)
     arquivo = models.FileField(upload_to='documentos/')
-    history = HistoricalRecords()
-    
+    history = HistoricalRecords() 
+
     def __str__(self):
         return self.titulo
     

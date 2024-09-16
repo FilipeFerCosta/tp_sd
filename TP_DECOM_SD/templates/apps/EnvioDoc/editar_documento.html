@@ -9,11 +9,10 @@
 
 <h3>Histórico de Revisões</h3>
 <ul>
-    {% for historico in historico %}
+    {% for historico in historico_alteracao %}
         <li>
             Data: {{ historico.history_date }} 
             Alterado por: {{ historico.history_user }} 
-            Alterações: {{ historico.get_field_diff_display }}
         </li>
     {% endfor %}
 </ul>

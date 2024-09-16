@@ -16,13 +16,14 @@ def index(request):
     return render(request, 'apps/EnvioDoc/index.html', {'formulario': formulario})
 
 class Atualizar_forms(UpdateView):
+
     model = Documento 
     form_class = DocumentoForm 
     template_name = 'apps/EnvioDoc/editar_documento.html'
-    success_url = reverse_lazy('index') 
+    success_url = reverse_lazy('busca_documentos') 
 
-
-    def historico_alteracao(self, **kwargs):
-        context = super().historico_alteracao(**kwargs)
-        context['historico'] = self.object.history.all()  # Adiciona o histórico ao contexto
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        instance = self.get_object()  
+        context['historico_alteracao'] = instance.history.all()  
         return context
