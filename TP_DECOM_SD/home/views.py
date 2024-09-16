@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from TP_DECOM_SD.EnvioDoc.models import Documento
 from django.db.models import Q
+from django.views.generic import DeleteView
 
 # View index
 class DocumentoListView(ListView):
@@ -48,6 +49,11 @@ class DocumentoDeleteView(DeleteView):
     success_url = reverse_lazy('busca_documentos')
     pk_url_kwarg = 'documento_id'
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, 'Documento excluído com sucesso!')
-        return super().delete(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        
+        if "confirm" in request.POST: 
+            messages.success(self.request, 'Documento excluído com sucesso!')
+            return super().delete(request, *args, **kwargs)
+        else:
+           
+            return redirect(self.success_url)
