@@ -8,7 +8,7 @@ from django.db.models import Q
 # View index
 class DocumentoListView(ListView):
     model = Documento
-    template_name = 'busca_documentos.html'
+    template_name = 'apps/home/listar_documentos.html'
     context_object_name = 'documentos'
     paginate_by = 10
     ordering = 'titulo'
@@ -37,15 +37,15 @@ class DocumentoListView(ListView):
 # View para visualizar documento
 class DocumentoDetailView(DetailView):
     model = Documento
-    template_name = 'visualizar_documento.html'
+    template_name = 'apps/home/visualizar_documento.html'
     context_object_name = 'documento'
     pk_url_kwarg = 'documento_id'
 
 # View para deletar documento
 class DocumentoDeleteView(DeleteView):
     model = Documento
-    template_name = 'deletar_documento.html'
-    success_url = reverse_lazy('busca_documentos')
+    template_name = 'apps/home/deletar_documento.html'
+    success_url = reverse_lazy('listar_documentos')
     pk_url_kwarg = 'documento_id'
 
     def delete(self, request, *args, **kwargs):
