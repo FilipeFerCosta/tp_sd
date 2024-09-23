@@ -1,7 +1,0 @@
-<h2>Você tem certeza que deseja excluir o documento "{{ object.nome }}"?</h2>
-<form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="confirm" value="yes">
-    <button type="submit">Sim, excluir</button>
-    <a href="{% url 'busca_documentos' %}">Cancelar</a>
-</form>

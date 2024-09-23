@@ -30,14 +30,15 @@
       <p>
         <strong>Arquivo:</strong>
       </p>
-      <a href="{{ documento.arquivo.url }}" download>Download</a>
+
+    <a href="{{ documento.arquivo.url }}" download><button type="button">Download</button></a>
     {% endif %}
     <br>
-    <a href="{% url 'deletar_documento' documento.id %}">Excluir Documento</a>
+    <a href="{% url 'deletar_documento' documento.id %}"><button type="button">Excluir Documento</button></a>
     <br>
-    <a href="{% url 'editar_artigo' documento.id %}">Editar Documento</a>
+    <a href="{% url 'editar_artigo' documento.id %}"><button type="button">Editar Documento</button></a>
     <br>
-    <a href="{% url 'busca_documentos' %}">Voltar à busca</a>
+    <a href="{% url 'listar_documentos' %}"><button type="button">Voltar à busca</button></a>
   </main>
 </body>
 </html>
