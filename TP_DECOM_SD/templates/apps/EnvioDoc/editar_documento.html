@@ -5,6 +5,8 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Salvar alterações</button>
+    <button type="reset" value="Reset">Resetar</button>
+    <a href="{% url 'listar_documentos' %}"><button type="button">Voltar à busca</button></a>
 </form>
 
 <h3>Histórico de Revisões</h3>
