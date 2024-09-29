@@ -15,10 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .api_views import DocumentoList, DocumentoSearch
+from .api_views import DocumentoList, DocumentoSearch, DocumentoUpdate
 
 urlpatterns = [
     path('documentos/list', DocumentoList.as_view(), name='documento-list'),
     path('documentos/search/', DocumentoSearch.as_view(), name='documento-search'),
+    path('documentos/update/<int:id>', DocumentoUpdate.as_view(), name='documento-update'),
 ]
 #exemplo de query para a busca ?q=teste%20qualquer
