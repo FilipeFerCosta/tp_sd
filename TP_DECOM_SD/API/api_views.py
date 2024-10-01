@@ -95,18 +95,30 @@ class DocumentoUpdate(APIView):
     - 404 Not Found: Documento não encontrado.
     - 400 Bad Request: Dados inválidos fornecidos.
     """
+
     def get(self, request, id):
         documento = get_object_or_404(Documento, id=id)
         serializer = DocumentoSerializer(documento)
         return Response(serializer.data)
 
+    queryset = Documento.objects.all()
+    serializer_class = DocumentoSerializer
+
     def put(self, request, id):
+
         documento = get_object_or_404(Documento, id=id)
-        serializer = DocumentoSerializer(documento, data=request.data)
+        serializer = DocumentoSerializer(documento)
         
+        # Recuperar o documento existente baseado no ID fornecido
+        documento = get_object_or_404(Documento, id=id)
+
+        # Passar os dados atualizados para o serializer, junto com a instância existente
+        serializer = DocumentoSerializer(documento, data=request.data)  # Use o serializer diretamente
+
         if serializer.is_valid():
-            serializer.save()
+            serializer.save()  # Salva as mudanças no documento
             return Response(serializer.data, status=status.HTTP_200_OK)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
