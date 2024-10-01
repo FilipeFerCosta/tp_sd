@@ -5,6 +5,30 @@ from TP_DECOM_SD.EnvioDoc.models import Documento
 from .serializers import DocumentoSerializer
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from rest_framework import generics
+
+
+class DocumentoCreate(generics.CreateAPIView):
+    """
+    View para criar um novo documento.
+
+    POST:
+    Cria um novo documento com base nos dados fornecidos no corpo da requisição.
+
+    Retorno:
+    - 201 Created: Documento criado com sucesso.
+    - 400 Bad Request: Dados inválidos fornecidos.
+    """
+    queryset = Documento.objects.all()
+    serializer_class = DocumentoSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class DocumentoList(APIView):
@@ -84,3 +108,23 @@ class DocumentoUpdate(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class DocumentoDelete(APIView):
+    """
+    View para excluir um documento específico.
+
+    DELETE:
+    Exclui o documento correspondente ao ID fornecido.
+
+    Parâmetro de URL:
+    - id: O ID do documento a ser excluído.
+
+    Retorno:
+    - 204 No Content: Documento excluído com sucesso.
+    - 404 Not Found: Documento não encontrado.
+    """
+    def delete(self, request, id):
+        documento = get_object_or_404(Documento, id=id)
+        documento.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

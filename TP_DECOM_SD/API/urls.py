@@ -1,25 +1,13 @@
-"""
-URL configuration for API project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import path
-from .api_views import DocumentoList, DocumentoSearch, DocumentoUpdate
+from .api_views import DocumentoList, DocumentoSearch, DocumentoUpdate, DocumentoCreate, DocumentoDelete
 
 urlpatterns = [
     path('documentos/list', DocumentoList.as_view(), name='documento-list'),
     path('documentos/search/', DocumentoSearch.as_view(), name='documento-search'),
     path('documentos/update/<int:id>', DocumentoUpdate.as_view(), name='documento-update'),
+    path('documentos/create/', DocumentoCreate.as_view(), name='documento-create'),  # New create endpoint
+    path('documentos/delete/<int:id>', DocumentoDelete.as_view(), name='documento-delete'),  # New delete endpoint
 ]
+
+
 #exemplo de query para a busca ?q=teste%20qualquer
