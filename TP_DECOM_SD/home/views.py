@@ -34,14 +34,13 @@ class DocumentoListView(ListView):
         context['ordenacao'] = self.request.GET.get('ordenacao', 'titulo')
         return context
 
-# View para visualizar documento
+
 class DocumentoDetailView(DetailView):
     model = Documento
     template_name = 'apps/home/visualizar_documento.html'
     context_object_name = 'documento'
     pk_url_kwarg = 'documento_id'
 
-# View para deletar documento
 class DocumentoDeleteView(DeleteView):
     model = Documento
     template_name = 'apps/home/deletar_documento.html'

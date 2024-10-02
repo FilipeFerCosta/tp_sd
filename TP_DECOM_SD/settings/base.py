@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'TP_DECOM_SD.EnvioDoc',
     'TP_DECOM_SD.home',
-    'TP_DECOM_SD.API',
+    'TP_DECOM_SD.api',
     'simple_history',
     'rest_framework',
 ]
