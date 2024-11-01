@@ -29,7 +29,29 @@ INSTALLED_APPS = [
     'TP_DECOM_SD.API',
     'simple_history',
     'rest_framework',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
 ]
+
+#allauth configuracoes
+
+ACCOUNT_RATE_LIMITS = {
+    'login_failed': '5/1m',  # Limite de 5 tentativas de login a cada 1 minuto
+    'signup': '10/h',        # Limite de 10 registros por hora
+    # Outros limites que você deseja aplicar
+}
+
+# Configurações de Autenticação
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Permitir login por nome de usuário ou e-mail
+ACCOUNT_EMAIL_REQUIRED = True                     # Exigir e-mail para registro
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'          # Exigir verificação de e-mail
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5                  # Limitar tentativas de login
+
+# Configurações de Redefinição e Recuperação de Senha
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True        # Login automático após c
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -40,6 +62,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 ROOT_URLCONF = 'TP_DECOM_SD.urls'
@@ -72,6 +100,11 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.beckends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -89,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
