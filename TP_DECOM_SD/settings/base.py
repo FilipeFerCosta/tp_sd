@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'TP_DECOM_SD.EnvioDoc',
     'TP_DECOM_SD.home',
     'TP_DECOM_SD.API',
+    'TP_DECOM_SD.usuarios',
     'simple_history',
     'rest_framework',
     'django.contrib.sites',
@@ -52,6 +53,14 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5                  # Limitar tentativas de login
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True        # Login automático após c
 
 SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = False
+LOGIN_REDIRECT_URL = '/'  
+ACCOUNT_SIGNUP_REDIRECT_URL = '/'  
+AUTH_USER_MODEL = 'usuarios.User'
+
+ACCOUNT_LOGOUT_ON_GET = False  # Prefira usar POST para logout
+LOGOUT_REDIRECT_URL = 'account_login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,6 +72,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -100,10 +110,6 @@ DATABASES = {
     }
 }
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.beckends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -127,9 +133,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'pt-br'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 

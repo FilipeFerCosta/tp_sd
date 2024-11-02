@@ -4,6 +4,11 @@
     <title>Busca de Documentos</title>
 </head>
 <body>
+    <form method="POST" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    
     <h1>Busca de Documentos</h1>
 
     <form method="GET">

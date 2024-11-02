@@ -1,11 +1,13 @@
+from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.contrib import messages
 from TP_DECOM_SD.EnvioDoc.models import Documento
 from django.db.models import Q
-
-# View index
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from TP_DECOM_SD.usuarios.models import User
+    
 class DocumentoListView(ListView):
     model = Documento
     template_name = 'apps/home/listar_documentos.html'
@@ -41,13 +43,46 @@ class DocumentoDetailView(DetailView):
     context_object_name = 'documento'
     pk_url_kwarg = 'documento_id'
 
-# View para deletar documento
-class DocumentoDeleteView(DeleteView):
+class DocumentoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Documento
     template_name = 'apps/home/deletar_documento.html'
     success_url = reverse_lazy('listar_documentos')
     pk_url_kwarg = 'documento_id'
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, 'Documento excluído com sucesso!')
-        return super().delete(request, *args, **kwargs)
+    def test_func(self):
+        documento = self.get_object()
+        if self.request.user.is_administrador():
+            return True
+        elif self.request.user.is_professor():
+            return True  # Professores podem excluir documentos de qualquer usuário
+        elif self.request.user.is_aluno():
+            return documento.autor == self.request.user  # Alunos podem excluir apenas seus próprios documentos
+        return False
+
+    def handle_no_permission(self):
+        messages.error(self.request, "Você não tem permissão para excluir este documento.")
+        return redirect('listar_documentos')
+
+class UserListView(LoginRequiredMixin, UserPassesTestMixin, View):
+    template_name = 'apps/home/lista_usuarios.html'
+
+    def test_func(self):
+        return self.request.user.is_administrador()  # Permissão para acessar apenas administradores
+
+    def get(self, request, *args, **kwargs):
+        usuarios = User.objects.all()  # Obtém todos os usuários
+        return render(request, self.template_name, {'usuarios': usuarios})
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.POST.get('user_id')
+        novo_cargo = request.POST.get('cargo')
+        user = get_object_or_404(User, id=user_id)
+
+        if novo_cargo in dict(User.CARGO_CHOICES).keys():
+            user.cargo = novo_cargo
+            user.save()
+            messages.success(request, f"Cargo de {user.username} atualizado para {novo_cargo}.")
+        else:
+            messages.error(request, "Cargo inválido.")
+
+        return redirect('listar_usuarios')  # Redireciona para a página da lista de usuários
