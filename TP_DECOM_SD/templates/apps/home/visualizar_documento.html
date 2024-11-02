@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizar Documento</title>
+</head>
+<body>
+  <header>
+    <h1>Documento</h1>
+  </header>
+  <main>
+    <!-- Acessando diretamente o objeto documento -->
+    <h2>{{ documento.titulo }}</h2>
+    <p>
+      <strong>Autor:</strong> {{ documento.autores }}
+    </p>
+    <p>
+      <strong>Data de Publicação:</strong> {{ documento.data_publicacao }}
+    </p>
+    <p>
+      <strong>Resumo:</strong>
+    </p>
+    <p>{{ documento.resumo }}</p>
+    <p>
+      <strong>Palavras-chave:</strong>
+    </p>
+    <p>{{ documento.palavras_chave }}</p>
+    {% if documento.arquivo %}
+      <p>
+        <strong>Arquivo:</strong>
+      </p>
+
+    <a href="{{ documento.arquivo.url }}" download><button type="button">Download</button></a>
+    {% endif %}
+    <br>
+    <a href="{% url 'deletar_documento' documento.id %}"><button type="button">Excluir Documento</button></a>
+    <br>
+    <a href="{% url 'editar_artigo' documento.id %}"><button type="button">Editar Documento</button></a>
+    <br>
+    <a href="{% url 'listar_documentos' %}"><button type="button">Voltar à busca</button></a>
+  </main>
+</body>
+</html>
