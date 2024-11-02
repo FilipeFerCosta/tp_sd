@@ -8,4 +8,5 @@ urlpatterns = [
     path('', include('TP_DECOM_SD.home.urls')),  
     path('documentos/', include('TP_DECOM_SD.EnvioDoc.urls')),  
     path('api/', include('TP_DECOM_SD.API.urls')),  
+    path('accounts/', include('TP_DECOM_SD.accounts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

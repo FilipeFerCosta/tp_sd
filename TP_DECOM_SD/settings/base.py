@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'TP_DECOM_SD.API',
     'simple_history',
     'rest_framework',
+    'TP_DECOM_SD.accounts',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# settings.py
+AUTH_USER_MODEL = 'accounts.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

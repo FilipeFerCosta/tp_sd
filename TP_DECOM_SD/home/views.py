@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, DeleteView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -6,12 +7,13 @@ from TP_DECOM_SD.EnvioDoc.models import Documento
 from django.db.models import Q
 
 # View index
-class DocumentoListView(ListView):
+class DocumentoListView(LoginRequiredMixin, ListView):
     model = Documento
     template_name = 'apps/home/listar_documentos.html'
     context_object_name = 'documentos'
     paginate_by = 10
     ordering = 'titulo'
+    login_url = 'login'  # URL para redirecionamento em caso de não estar autenticado
 
     def get_queryset(self):
         termo_busca = self.request.GET.get('q', '')
@@ -35,18 +37,20 @@ class DocumentoListView(ListView):
         return context
 
 # View para visualizar documento
-class DocumentoDetailView(DetailView):
+class DocumentoDetailView(LoginRequiredMixin, DetailView):
     model = Documento
     template_name = 'apps/home/visualizar_documento.html'
     context_object_name = 'documento'
     pk_url_kwarg = 'documento_id'
+    login_url = 'login'
 
 # View para deletar documento
-class DocumentoDeleteView(DeleteView):
+class DocumentoDeleteView(LoginRequiredMixin, DeleteView):
     model = Documento
     template_name = 'apps/home/deletar_documento.html'
     success_url = reverse_lazy('listar_documentos')
     pk_url_kwarg = 'documento_id'
+    login_url = 'login'
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, 'Documento excluído com sucesso!')
