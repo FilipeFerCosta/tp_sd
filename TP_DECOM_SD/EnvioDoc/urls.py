@@ -1,9 +1,9 @@
 from django.urls import path
 from . import views
-from .views import Atualizar_forms
+from .views import DocumentoUpdateView, DocumentoCreateView
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('editar_documento/<int:pk>/', Atualizar_forms.as_view(), name='editar_artigo'),
+    path('', DocumentoCreateView.as_view(), name='index'),
+    path('editar_documento/<int:pk>/', DocumentoUpdateView.as_view(), name='editar_artigo'),
 ]
 

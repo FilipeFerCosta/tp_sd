@@ -61,6 +61,13 @@ TEMPLATES = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',  # Argon2 como o hash principal
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',  # Backup de algoritmos seguros
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
 WSGI_APPLICATION = 'TP_DECOM_SD.wsgi.application'
 
 # Database

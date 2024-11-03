@@ -6,7 +6,6 @@ class User(AbstractUser):
     CARGO_CHOICES = (
         ('aluno', 'Aluno'),
         ('professor', 'Professor'),
-        ('administrador', 'Administrador'),
     )
     cargo = models.CharField(max_length=20, choices=CARGO_CHOICES, default='aluno')
 

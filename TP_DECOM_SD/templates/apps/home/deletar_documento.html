@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Enviar Documento</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmar Exclusão</title>
 </head>
 <body>
-    <h1>Enviar Documento</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ formulario.as_p }}
-        <button type="submit">Enviar</button>
+  <header>
+    <h1>Confirmar Exclusão</h1>
+  </header>
+  <main>
+    <p>Tem certeza de que deseja excluir o documento "{{ documento.titulo }}"?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Confirmar Exclusão</button>
+      <a href="{% url 'visualizar_documento' documento.id %}">Cancelar</a>
     </form>
+  </main>
 </body>
 </html>
