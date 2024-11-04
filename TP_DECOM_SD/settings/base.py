@@ -27,9 +27,10 @@ INSTALLED_APPS = [
     'TP_DECOM_SD.EnvioDoc',
     'TP_DECOM_SD.home',
     'TP_DECOM_SD.API',
+    'TP_DECOM_SD.accounts',
     'simple_history',
     'rest_framework',
-    'TP_DECOM_SD.accounts',
+
 ]
 
 MIDDLEWARE = [
@@ -62,11 +63,12 @@ TEMPLATES = [
 ]
 
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',  # Argon2 como o hash principal
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',  # Backup de algoritmos seguros
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',  # Hasher principal: Argon2 para hashing de senha forte e moderno
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',  # Backup: PBKDF2 com SHA256, amplamente utilizado e seguro
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',  # Backup: PBKDF2 com SHA1, para compatibilidade com hashes antigos
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',  # Backup adicional: BCrypt com SHA256, outra opção segura
 ]
+
 
 WSGI_APPLICATION = 'TP_DECOM_SD.wsgi.application'
 
@@ -83,12 +85,16 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,  # Defina o comprimento mínimo aqui
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -96,7 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'TP_DECOM_SD.accounts.validators.ValidadorDeSenhaPersonalizado',  # Adicionando validador personalizado 
+    },
 ]
+
+
 
 # settings.py
 AUTH_USER_MODEL = 'accounts.User'

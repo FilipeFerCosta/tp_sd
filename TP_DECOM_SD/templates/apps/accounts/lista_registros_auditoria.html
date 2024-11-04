@@ -1,0 +1,15 @@
+<h2>Registros de Auditoria</h2>
+<table>
+    <tr>
+        <th>Usuário</th>
+        <th>Ação</th>
+        <th>Data/Hora</th>
+    </tr>
+    {% for log in registros_auditoria %}
+    <tr>
+        <td>{{ log.usuario.username }}</td>
+        <td>{{ log.acao }}</td>
+        <td>{{ log.timestamp }}</td>
+    </tr>
+    {% endfor %}
+</table>
