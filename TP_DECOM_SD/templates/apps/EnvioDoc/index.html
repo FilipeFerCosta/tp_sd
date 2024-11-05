@@ -30,18 +30,29 @@
             font-weight: bold;
             margin-bottom: 5px;
         }
-        button {
-            width: 100%;
-            padding: 10px;
+        .button-group {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+        button, .back-button {
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: #fff;
             border: none;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            text-decoration: none;
         }
-        button:hover {
+        button:hover, .back-button:hover {
             background-color: #45a049;
+        }
+        .back-button {
+            background-color: #bbb;
+        }
+        .back-button:hover {
+            background-color: #999;
         }
         .errorlist {
             color: red;
@@ -51,6 +62,11 @@
 </head>
 <body>
     <div class="container">
+        <!-- Botão Voltar no topo -->
+        <div class="button-group">
+            <a href="{% url 'listar_documentos' %}" class="back-button">Voltar</a>
+        </div>
+        
         <h1>Enviar Documento</h1>
         {% if form.errors %}
             <div class="errorlist">
@@ -58,6 +74,8 @@
                 {{ form.non_field_errors }}
             </div>
         {% endif %}
+        
+        <!-- Formulário principal -->
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}

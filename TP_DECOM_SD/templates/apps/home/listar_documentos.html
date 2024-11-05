@@ -32,8 +32,11 @@
             <li>Nenhum documento encontrado.</li>
         {% endfor %}
     </ul>
+
     <h2>Adicionar Documento</h2>
-    <a href="{% url 'index' %}"><button type="button"> Adicionar</button></a>
+    <a href="{% url 'index' %}"><button type="button">Adicionar</button></a>
+
+    <a href="{% url 'registros_auditoria' %}"><button type="button">Registros de Auditoria</button></a>
 
     <div class="pagination">
         <span class="step-links">
@@ -48,6 +51,7 @@
             {% endif %}
         </span>
     </div>
+    
     <form method="POST" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit">Logout</button>
