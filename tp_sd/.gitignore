@@ -1,0 +1,7 @@
+venv/
+.pytest_cache/
+__pycache__/
+migrations/
+db.sqlite3
+.env
+media/

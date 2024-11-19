@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Busca de Documentos</title>
+</head>
+<body>
+    <h1>Busca de Documentos</h1>
+
+    <form method="GET">
+        <!-- Input de busca -->
+        <input type="text" name="q" id="query" placeholder="Digite o termo de busca..." value="{{ query }}">
+        
+        <!-- Campo de ordenação -->
+        <label for="ordenacao">Ordenar por:</label>
+        <select name="ordenacao" id="ordenacao">
+            <option value="titulo" {% if ordenacao == "titulo" %}selected{% endif %}>Título</option>
+            <option value="data_publicacao" {% if ordenacao == "data_publicacao" %}selected{% endif %}>Data de Publicação</option>
+        </select>
+
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Resultados da Busca</h2>
+    <ul>
+        {% for documento in page_obj %}
+            <li>
+                <a href="{% url 'visualizar_documento' documento.id %}">
+                    {{ documento.titulo }} - {{ documento.autores }} ({{ documento.data_publicacao }})
+                </a>
+            </li>
+        {% empty %}
+            <li>Nenhum documento encontrado.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Adicionar Documento</h2>
+    <a href="{% url 'index' %}"><button type="button">Adicionar</button></a>
+
+    <a href="{% url 'registros_auditoria' %}"><button type="button">Registros de Auditoria</button></a>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}&ordenacao={{ ordenacao }}">Anterior</a>
+            {% endif %}
+
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?q={{ query }}&page={{ page_obj.next_page_number }}&ordenacao={{ ordenacao }}">Próxima</a>
+            {% endif %}
+        </span>
+    </div>
+    
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

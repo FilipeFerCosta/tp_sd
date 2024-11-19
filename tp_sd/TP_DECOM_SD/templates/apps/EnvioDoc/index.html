@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Documento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+        button, .back-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        button:hover, .back-button:hover {
+            background-color: #45a049;
+        }
+        .back-button {
+            background-color: #bbb;
+        }
+        .back-button:hover {
+            background-color: #999;
+        }
+        .errorlist {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botão Voltar no topo -->
+        <div class="button-group">
+            <a href="{% url 'listar_documentos' %}" class="back-button">Voltar</a>
+        </div>
+        
+        <h1>Enviar Documento</h1>
+        {% if form.errors %}
+            <div class="errorlist">
+                <p><strong>Por favor, corrija os erros abaixo:</strong></p>
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        
+        <!-- Formulário principal -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+Para criar o ambiente virtual:
+python3 -m venv *nome*
+
+-
+
+Para entrar no ambiente virtual:
+. /path/to/venv/bin/activate	
+
+-
+
+para instalar as dependências do django:
+pip install -r requirements.txt
+
+-
+
+Crie o arquivo na raiz do projeto chamado .env
+Lá terá as informações da secret key e DEBUG, elas são armazenadas como strings
+
+Exemplos do arquivo .env
+
+SECRET_KEY = 'secret key gerada aqui'
+DEBUG = 'True'
+
+-
+
+Para gerar uma secret key:
+Com o ambiente virtual ativo ative o shell do django
+./manage.py shell
+
+Dentro do shell do django use os seguintes scripts
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())
+
+-
+
+Para fazer a migração faça o makemigrations comum
+python manage.py makemigrations
+
+Depois execute esses dois 
+python manage.py makemigrations accounts
+python manage.py makemigrations EnvioDoc
+
+Agora pode executar o migrate
+python manage.py migrate
+
+-
+
+Para criar o super usuário é necessário os seguintes requisitos:
+Your password can’t be too similar to your other personal information.
+Your password must contain at least 8 characters.
+Your password can’t be a commonly used password.
+Your password can’t be entirely numeric.
+Sua senha deve conter pelo menos um dígito, uma letra maiúscula e uma letra minúscula.
