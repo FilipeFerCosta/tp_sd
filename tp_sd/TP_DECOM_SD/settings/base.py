@@ -138,9 +138,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+STATIC_ROOT = None
 
-STATIC_ROOT = "/home/filipe/sasi/static_root"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+#STATIC_ROOT = "/home/filipe/sasi/static_root"
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 MEDIA_ROOT = BASE_DIR / "media"
 ROOT_URLCONF = 'TP_DECOM_SD.urls'
 

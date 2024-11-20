@@ -23,14 +23,16 @@ class DocumentoListView(LoginRequiredMixin, ListView):
         if termo_busca:
             queryset = queryset.filter(
                 Q(titulo__icontains=termo_busca) |
-                Q(autores__icontains=termo_busca) |
+                Q(autor__username__icontains=termo_busca) |  # Campo autor ajustado
+                Q(equipe__username__icontains=termo_busca) |  # Campo equipe ajustado
                 Q(revista__icontains=termo_busca) |
                 Q(palavras_chave__icontains=termo_busca) |
                 Q(resumo__icontains=termo_busca) |
                 Q(data_publicacao__icontains=termo_busca)
-            )
+            ).distinct()  # Distinct para evitar duplicação devido a ManyToMany
         ordenacao = self.request.GET.get('ordenacao', 'titulo')
         return queryset.order_by(ordenacao)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
