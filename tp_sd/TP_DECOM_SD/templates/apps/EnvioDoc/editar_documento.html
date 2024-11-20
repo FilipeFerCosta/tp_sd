@@ -1,20 +1,31 @@
-<!-- Esse arquivo vai editar o forms do arquivo index.html -->
+{% extends 'base/base.html' %}
 
-<h1>Editar Artigo</h1>
-<form method="post" enctype="multipart/form-data">
+{% block title %}Editar Documento{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Editar Documento</h1>
+  
+  <!-- Formulário de edição -->
+  <form method="post" enctype="multipart/form-data" class="mb-4">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Salvar alterações</button>
-    <button type="reset" value="Reset">Resetar</button>
-    <a href="{% url 'listar_documentos' %}"><button type="button">Voltar à busca</button></a>
-</form>
+    <div class="d-flex gap-3">
+      <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+      <button type="reset" class="btn btn-warning">Resetar</button>
+      <a href="{% url 'listar_documentos' %}" class="btn btn-secondary">Voltar à Busca</a>
+    </div>
+  </form>
 
-<h3>Histórico de Revisões</h3>
-<ul>
+  <!-- Histórico de revisões -->
+  <h3>Histórico de Revisões</h3>
+  <ul class="list-group">
     {% for historico in historico_alteracao %}
-        <li>
-            Data: {{ historico.history_date }} 
-            Alterado por: {{ historico.history_user }} 
-        </li>
+      <li class="list-group-item">
+        <strong>Data:</strong> {{ historico.history_date|date:"d/m/Y H:i" }}<br>
+        <strong>Alterado por:</strong> {{ historico.history_user|default:"Usuário Desconhecido" }}
+      </li>
+    {% empty %}
+      <li class="list-group-item">Nenhum histórico de alterações disponível.</li>
     {% endfor %}
-</ul>
+  </ul>
+{% endblock %}

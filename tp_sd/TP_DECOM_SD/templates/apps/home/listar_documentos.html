@@ -1,60 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Busca de Documentos</title>
-</head>
-<body>
-    <h1>Busca de Documentos</h1>
+{% extends 'base/base.html' %}
 
-    <form method="GET">
-        <!-- Input de busca -->
-        <input type="text" name="q" id="query" placeholder="Digite o termo de busca..." value="{{ query }}">
-        
-        <!-- Campo de ordenação -->
-        <label for="ordenacao">Ordenar por:</label>
-        <select name="ordenacao" id="ordenacao">
-            <option value="titulo" {% if ordenacao == "titulo" %}selected{% endif %}>Título</option>
-            <option value="data_publicacao" {% if ordenacao == "data_publicacao" %}selected{% endif %}>Data de Publicação</option>
-        </select>
+{% block title %}Busca de Documentos{% endblock %}
 
-        <button type="submit">Buscar</button>
-    </form>
+{% block content %}
+<h1>Busca de Documentos</h1>
 
-    <h2>Resultados da Busca</h2>
-    <ul>
-        {% for documento in page_obj %}
-            <li>
-                <a href="{% url 'visualizar_documento' documento.id %}">
-                    {{ documento.titulo }} - {{ documento.autores }} ({{ documento.data_publicacao }})
-                </a>
-            </li>
-        {% empty %}
-            <li>Nenhum documento encontrado.</li>
-        {% endfor %}
+<form method="GET" class="d-flex mb-4">
+  <input type="text" name="q" id="query" class="form-control me-2" placeholder="Digite o termo de busca..." value="{{ query }}">
+  
+  <select name="ordenacao" id="ordenacao" class="form-select me-2">
+    <option value="titulo" {% if ordenacao == "titulo" %}selected{% endif %}>Título</option>
+    <option value="data_publicacao" {% if ordenacao == "data_publicacao" %}selected{% endif %}>Data de Publicação</option>
+  </select>
+
+  <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+<ul class="list-group mb-4">
+  {% for documento in page_obj %}
+    <li class="list-group-item">
+      <a href="{% url 'visualizar_documento' documento.id %}">
+        <strong>{{ documento.titulo }}</strong> - {{ documento.autores }} ({{ documento.data_publicacao }})
+      </a>
+
+      <!-- Resumo do documento -->
+      <p>
+        <em class="resume_text">{{ documento.resumo }}</em> <!-- O resumo será formatado com os novos estilos -->
+      </p>
+
+      <!-- Palavras-chave -->
+      <p><strong>Palavras-chave:</strong> 
+        {% if documento.palavras_chave %}
+        <span class="badge bg-secondary">{{ documento.palavras_chave }}</span>
+    {% else %}
+      <span class="badge bg-light text-dark">Nenhuma palavra-chave</span>
+    {% endif %}
+      </p>
+    </li>
+  {% empty %}
+    <li class="list-group-item">Nenhum documento encontrado.</li>
+  {% endfor %}
+</ul>
+
+<div class="d-flex justify-content-between align-items-center">
+  <a href="{% url 'index' %}" class="btn btn-success">Adicionar Documento</a>
+  <a href="{% url 'registros_auditoria' %}" class="btn btn-info">Registros de Auditoria</a>
+</div>
+
+<div class="pagination mt-4">
+  <nav>
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}&ordenacao={{ ordenacao }}">Anterior</a>
+        </li>
+      {% endif %}
+      <li class="page-item disabled">
+        <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+      </li>
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}&ordenacao={{ ordenacao }}">Próxima</a>
+        </li>
+      {% endif %}
     </ul>
-
-    <h2>Adicionar Documento</h2>
-    <a href="{% url 'index' %}"><button type="button">Adicionar</button></a>
-
-    <a href="{% url 'registros_auditoria' %}"><button type="button">Registros de Auditoria</button></a>
-
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}&ordenacao={{ ordenacao }}">Anterior</a>
-            {% endif %}
-
-            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
-
-            {% if page_obj.has_next %}
-                <a href="?q={{ query }}&page={{ page_obj.next_page_number }}&ordenacao={{ ordenacao }}">Próxima</a>
-            {% endif %}
-        </span>
-    </div>
-    
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+  </nav>
+</div>
+{% endblock %}

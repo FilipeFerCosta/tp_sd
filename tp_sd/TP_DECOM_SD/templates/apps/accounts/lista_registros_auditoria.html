@@ -1,20 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Registros de Auditoria{% endblock %}
+
+{% block content %}
 <h2>Registros de Auditoria</h2>
-<table>
-    <tr>
-        <th>Usuário</th>
-        <th>Ação</th>
-        <th>Data/Hora</th>
-    </tr>
-    {% for log in registros_auditoria %}
-    <tr>
-        <td>{{ log.usuario.username }}</td>
-        <td>{{ log.acao }}</td>
-        <td>{{ log.timestamp }}</td>
-    </tr>
-    {% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Usuário</th>
+            <th>Ação</th>
+            <th>Data/Hora</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in registros_auditoria %}
+        <tr>
+            <td>{{ log.usuario.username }}</td>
+            <td>{{ log.acao }}</td>
+            <td>{{ log.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
-<a href="{% url 'listar_documentos' %}"><button type="button">Voltar</button></a>
-<br>
-<a href="{% url 'index' %}"><button type="button">Adicionar documento</button></a>
-
-
+<div class="mt-3">
+    <a href="{% url 'listar_documentos' %}" class="btn btn-secondary">Voltar</a>
+    <a href="{% url 'index' %}" class="btn btn-primary">Adicionar documento</a>
+</div>
+{% endblock %}

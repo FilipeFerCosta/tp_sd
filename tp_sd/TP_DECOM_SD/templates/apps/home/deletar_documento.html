@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Confirmar Exclusão</title>
-</head>
-<body>
-  <header>
-    <h1>Confirmar Exclusão</h1>
-  </header>
-  <main>
-    <p>Tem certeza de que deseja excluir o documento "{{ documento.titulo }}"?</p>
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit">Confirmar Exclusão</button>
-      <a href="{% url 'visualizar_documento' documento.id %}">Cancelar</a>
-    </form>
-  </main>
-</body>
-</html>
+{% extends 'base/base.html' %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1 class="mb-4 text-danger">Confirmar Exclusão</h1>
+  
+  <p>Tem certeza de que deseja excluir o documento <strong>"{{ documento.titulo }}"</strong>?</p>
+  
+  <form method="post" class="d-flex gap-2 mt-3">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+    <a href="{% url 'visualizar_documento' documento.id %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

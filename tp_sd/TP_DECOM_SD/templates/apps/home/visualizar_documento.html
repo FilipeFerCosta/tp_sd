@@ -1,60 +1,56 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visualizar Documento</title>
-</head>
-<body>
-  <header>
-    <h1>Documento</h1>
-  </header>
-  <main>
-    <!-- Acessando diretamente o objeto documento -->
-    <h2>{{ documento.titulo }}</h2>
-    <p>
-      <strong>Autor:</strong> {{ documento.autor }}
-    </p>
-    {% if documento.equipe.all %}
-    <strong>Equipe:</strong>
+{% extends 'base/base.html' %}
+
+{% block title %}Visualizar Documento{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1 class="mb-4">Visualizar Documento</h1>
+
+  <!-- Detalhes do documento -->
+  <h2>{{ documento.titulo }}</h2>
+  <p><strong>Autor:</strong> {{ documento.autor }}</p>
+  
+  <!-- Equipe -->
+  {% if documento.equipe.all %}
+    <p><strong>Equipe:</strong></p>
     <ul>
       {% for membro in documento.equipe.all %}
-        <li>{{ membro.username}}</li>  <!-- Ou usar {{ membro.username }} se preferir -->
+        <li>{{ membro.username }}</li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>Nenhum membro da equipe foi adicionado.</p>
+    <p><strong>Equipe:</strong> Nenhum membro da equipe foi adicionado.</p>
   {% endif %}
   
-   
-    <p>
-      <strong>Data de Publicação:</strong> {{ documento.data_publicacao }}
-    </p>
-    <p>
-      <strong>Resumo:</strong>
-    </p>
-    <p>{{ documento.resumo }}</p>
-    <p>
-      <strong>Palavras-chave:</strong>
-    </p>
-    <p>{{ documento.palavras_chave }}</p>
-    <p>
-      <strong>Revista:</strong> {{ documento.revista }}
-    </p>
-    {% if documento.arquivo %}
-      <p>
-        <strong>Arquivo:</strong>
-      </p>
-      <a href="{{ documento.arquivo.url }}" download>
-        <button type="button">Download</button>
-      </a>
-    {% endif %}
-    <br>
-    <a href="{% url 'deletar_documento' documento.id %}"><button type="button">Excluir Documento</button></a>
-    <br>
-    <a href="{% url 'editar_artigo' documento.id %}"><button type="button">Editar Documento</button></a>
-    <br>
-    <a href="{% url 'listar_documentos' %}"><button type="button">Voltar à busca</button></a>
-  </main>
-</body>
-</html>
+  <!-- Data de publicação -->
+  <p><strong>Data de Publicação:</strong> {{ documento.data_publicacao }}</p>
+  
+  <!-- Resumo -->
+  <p><strong>Resumo:</strong></p>
+  <p class="text-muted">{{ documento.resumo }}</p>
+  
+  <!-- Palavras-chave -->
+  <p><strong>Palavras-chave:</strong></p>
+  {% if documento.palavras_chave %}
+      <span class="badge bg-secondary">{{ documento.palavras_chave }}</span>
+  {% else %}
+    <span class="badge bg-light text-dark">Nenhuma palavra-chave</span>
+  {% endif %}
+  
+  <!-- Revista -->
+  <p><strong>Revista:</strong> {{ documento.revista }}</p>
+  
+  <!-- Arquivo para download -->
+  {% if documento.arquivo %}
+    <p><strong>Arquivo:</strong></p>
+    <a href="{{ documento.arquivo.url }}" download class="btn btn-primary mb-2">Download</a>
+  {% endif %}
+  
+  <!-- Botões de ação -->
+  <div class="d-flex gap-2 mt-4">
+    <a href="{% url 'deletar_documento' documento.id %}" class="btn btn-danger">Excluir Documento</a>
+    <a href="{% url 'editar_artigo' documento.id %}" class="btn btn-warning">Editar Documento</a>
+    <a href="{% url 'listar_documentos' %}" class="btn btn-secondary">Voltar à busca</a>
+  </div>
+</div>
+{% endblock %}
