@@ -5,16 +5,17 @@
 {% block content %}
 <h1>Busca de Documentos</h1>
 
-<form method="GET" class="d-flex mb-4">
-  <input type="text" name="q" id="query" class="form-control me-2" placeholder="Digite o termo de busca..." value="{{ query }}">
+<form method="GET" class="d-flex flex-wrap flex-md-nowrap mb-4 gap-2">
+  <input type="text" name="q" id="query" class="form-control" placeholder="Digite o termo de busca..." value="{{ query }}">
   
-  <select name="ordenacao" id="ordenacao" class="form-select me-2">
+  <select name="ordenacao" id="ordenacao" class="form-select">
     <option value="titulo" {% if ordenacao == "titulo" %}selected{% endif %}>Título</option>
     <option value="data_publicacao" {% if ordenacao == "data_publicacao" %}selected{% endif %}>Data de Publicação</option>
   </select>
 
   <button type="submit" class="btn btn-primary">Buscar</button>
 </form>
+
 
 <ul class="list-group mb-4">
   {% for documento in page_obj %}
@@ -46,6 +47,11 @@
   <a href="{% url 'index' %}" class="btn btn-success">Adicionar Documento</a>
   <a href="{% url 'registros_auditoria' %}" class="btn btn-info">Registros de Auditoria</a>
 </div>
+
+<div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
+  <a href="{% url 'relatorio_geral' %}" class="btn btn-info" style="margin-left: auto;">Relatório</a>
+</div>
+
 
 <div class="pagination mt-4">
   <nav>

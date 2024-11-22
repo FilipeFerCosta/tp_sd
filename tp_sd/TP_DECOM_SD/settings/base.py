@@ -2,6 +2,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,9 +30,9 @@ INSTALLED_APPS = [
     'TP_DECOM_SD.home',
     'TP_DECOM_SD.API',
     'TP_DECOM_SD.accounts',
+    'TP_DECOM_SD.dashboard',
     'simple_history',
     'rest_framework',
-
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,14 @@ TEMPLATES = [
         },
     },
 ]
+
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587)) 
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False') == 'True'
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',  # Hasher principal: Argon2 para hashing de senha forte e moderno

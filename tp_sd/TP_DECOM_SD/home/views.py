@@ -9,30 +9,30 @@ from django.views import View
 from TP_DECOM_SD.accounts.models import User
 
 # View index
+# View index
 class DocumentoListView(LoginRequiredMixin, ListView):
     model = Documento
     template_name = 'apps/home/listar_documentos.html'
     context_object_name = 'documentos'
-    paginate_by = 10
+    paginate_by = 5
     ordering = 'titulo'
     login_url = 'login'
 
     def get_queryset(self):
         termo_busca = self.request.GET.get('q', '')
-        queryset = Documento.objects.all()
+        queryset = Documento.objects.filter(status='aprovado')  # Filtrar apenas artigos aprovados
         if termo_busca:
             queryset = queryset.filter(
                 Q(titulo__icontains=termo_busca) |
-                Q(autor__username__icontains=termo_busca) |  # Campo autor ajustado
-                Q(equipe__username__icontains=termo_busca) |  # Campo equipe ajustado
+                Q(autor__username__icontains=termo_busca) |
+                Q(equipe__username__icontains=termo_busca) |
                 Q(revista__icontains=termo_busca) |
                 Q(palavras_chave__icontains=termo_busca) |
                 Q(resumo__icontains=termo_busca) |
                 Q(data_publicacao__icontains=termo_busca)
-            ).distinct()  # Distinct para evitar duplicação devido a ManyToMany
+            ).distinct()
         ordenacao = self.request.GET.get('ordenacao', 'titulo')
         return queryset.order_by(ordenacao)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

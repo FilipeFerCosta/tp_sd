@@ -9,6 +9,7 @@ urlpatterns = [
     path('documentos/', include('TP_DECOM_SD.EnvioDoc.urls')),  
     path('api/', include('TP_DECOM_SD.API.urls')),  
     path('accounts/', include('TP_DECOM_SD.accounts.urls')),
+    path('dashboard/', include('TP_DECOM_SD.dashboard.urls')),
 ] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

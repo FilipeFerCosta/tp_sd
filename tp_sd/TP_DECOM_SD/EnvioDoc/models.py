@@ -4,11 +4,19 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from simple_history.models import HistoricalRecords
 from django.conf import settings
+
 def validar_ano(value):
     if value < 1900 or value > 2024:
         raise ValidationError(_('O ano deve estar entre 1900 e 2024.'))
 
 class Documento(models.Model):
+
+    TIPO_CHOICES = [
+        ('pendente', 'Pendente'),
+        ('aprovado', 'Aprovado'),
+        ('negado', 'Negado'),
+    ]
+    
     titulo = models.CharField(max_length=255)
     autor = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="documentos_criados"
@@ -21,6 +29,8 @@ class Documento(models.Model):
     data_publicacao = models.PositiveIntegerField(validators=[validar_ano])
     revista = models.CharField(max_length=255)
     arquivo = models.FileField(upload_to='documentos/')
+    aprovado = models.BooleanField(default=False)
+    status = models.CharField(max_length=10, choices=TIPO_CHOICES, default='pendente')
     history = HistoricalRecords() 
 
     def __str__(self):
@@ -30,3 +40,4 @@ class Documento(models.Model):
         super().clean()
         if not self.arquivo:
             raise ValidationError(_('O arquivo é obrigatório.'))
+        

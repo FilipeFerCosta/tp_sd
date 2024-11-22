@@ -1,0 +1,83 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Relatório de Artigos{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Botões superior -->
+    <a href="{% url 'listar_documentos' %}" class="btn btn-primary">Voltar</a>
+    <a href="{% url 'dashboard' %}" class="btn btn-primary">Dashboard</a>
+  </div>
+
+  <h1>Relatório de Artigos</h1>
+
+  <!-- Artigos Aprovados -->
+  <h2 class="mt-4">Artigos Aprovados</h2>
+  <ul class="list-group mb-4">
+    {% for artigo in aprovados %}
+      <li class="list-group-item">
+        <a href="{% url 'visualizar_documento' artigo.id %}">
+          <strong>{{ artigo.titulo }}</strong> - {{ artigo.autor }} ({{ artigo.data_publicacao }})
+        </a>
+
+        <!-- Resumo do documento -->
+        <p>
+          <em class="resume_text">{{ artigo.resumo }}</em>
+        </p>
+
+        <!-- Palavras-chave -->
+        <p><strong>Palavras-chave:</strong>
+          {% if artigo.palavras_chave %}
+            <span class="badge bg-secondary">{{ artigo.palavras_chave }}</span>
+          {% else %}
+            <span class="badge bg-light text-dark">Nenhuma palavra-chave</span>
+          {% endif %}
+        </p>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Nenhum artigo aprovado encontrado.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Artigos Pendentes -->
+  <h2 class="mt-4">Artigos Pendentes</h2>
+  <ul class="list-group mb-4">
+    {% for artigo in pendentes %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <a href="{% url 'visualizar_documento' artigo.id %}">
+            <strong>{{ artigo.titulo }}</strong> - {{ artigo.autor }} ({{ artigo.data_publicacao }})
+          </a>
+
+          <!-- Resumo do documento -->
+          <p>
+            <em class="resume_text">{{ artigo.resumo }}</em>
+          </p>
+
+          <!-- Palavras-chave -->
+          <p><strong>Palavras-chave:</strong>
+            {% if artigo.palavras_chave %}
+              <span class="badge bg-secondary">{{ artigo.palavras_chave }}</span>
+            {% else %}
+              <span class="badge bg-light text-dark">Nenhuma palavra-chave</span>
+            {% endif %}
+          </p>
+        </div>
+
+        <!-- Botões de ação (Autorizar e Negar) -->
+        <div>
+          <a href="{% url 'autorizar_artigo' artigo.id %}" class="btn btn-success btn-xl text-white" title="Autorizar Artigo" style="text-decoration: none;">
+            Autorizar
+          </a>
+          <a href="{% url 'negar_artigo' artigo.id %}" class="btn btn-danger btn-xl text-white" title="Negar Artigo" style="text-decoration: none;">
+            Negar
+          </a>
+        </div>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Nenhum artigo pendente encontrado.</li>
+    {% endfor %}
+  </ul>
+
+
+{% endblock %}

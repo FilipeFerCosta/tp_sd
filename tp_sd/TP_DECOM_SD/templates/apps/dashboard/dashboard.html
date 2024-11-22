@@ -1,0 +1,142 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Relatório Gráfico de Artigos{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'relatorio_geral' %}" class="btn btn-primary">Voltar</a>
+        <a href="{% url 'export_articles_pdf' %}" class="btn btn-primary">Exportar como pdf</a>
+    </div>
+
+  <h1>Relatório Gráfico de Artigos</h1>
+
+  <div class="row mt-4">
+    <!-- Gráfico 1: Status dos Documentos (Esquerda) -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5>Distribuição por Status</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="statusChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico 2: Documentos por Ano (Direita) -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5>Documentos por Ano</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="anoChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <!-- Gráfico 3: Palavras-chave mais frequentes (Esquerda) -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5>Top Palavras-chave</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="palavrasChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico 4: Documentos por Equipe (Direita) -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5>Documentos por Equipe</h5>
+        </div>
+        <div class="card-body">
+          <canvas id="equipeChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Configurações de tamanho para os gráficos
+    var pieChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      width: 250,  // Ajusta a largura para os gráficos de pizza
+      height: 250  // Ajusta a altura para os gráficos de pizza
+    };
+
+    var barChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      width: 400,  // Ajusta a largura para os gráficos de barra
+      height: 300  // Ajusta a altura para os gráficos de barra
+    };
+
+    // Gráfico 1: Status dos Documentos (Pizza)
+    var statusChartCtx = document.getElementById('statusChart').getContext('2d');
+    var statusChart = new Chart(statusChartCtx, {
+      type: 'pie',
+      data: {
+        labels: [{% for item in status_count %}'{{ item.status|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+          label: 'Status dos Documentos',
+          data: [{% for item in status_count %}{{ item.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+          backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
+        }]
+      },
+      options: pieChartOptions
+    });
+
+    // Gráfico 2: Artigos por Ano (Barra)
+    var anoChartCtx = document.getElementById('anoChart').getContext('2d');
+    var anoChart = new Chart(anoChartCtx, {
+      type: 'bar',
+      data: {
+        labels: [{% for item in ano_count %}'{{ item.data_publicacao|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+          label: 'Documentos por Ano',
+          data: [{% for item in ano_count %}{{ item.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+          backgroundColor: '#007bff',
+        }]
+      },
+      options: barChartOptions
+    });
+
+    // Gráfico 3: Palavras-chave mais frequentes (Barra)
+    var palavrasChartCtx = document.getElementById('palavrasChart').getContext('2d');
+    var palavrasChart = new Chart(palavrasChartCtx, {
+      type: 'bar',
+      data: {
+        labels: [{% for item in palavras_count %}'{{ item.palavras_chave|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+          label: 'Top Palavras-chave',
+          data: [{% for item in palavras_count %}{{ item.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+          backgroundColor: '#17a2b8',
+        }]
+      },
+      options: barChartOptions
+    });
+
+    // Gráfico 4: Documentos por Equipe (Pizza)
+    var equipeChartCtx = document.getElementById('equipeChart').getContext('2d');
+    var equipeChart = new Chart(equipeChartCtx, {
+      type: 'pie',
+      data: {
+        labels: [{% for item in equipe_count %}'{{ item.equipe|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+          label: 'Documentos por Equipe',
+          data: [{% for item in equipe_count %}{{ item.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+          backgroundColor: ['#ffc107', '#28a745', '#007bff'],
+        }]
+      },
+      options: pieChartOptions
+    });
+  </script>
+{% endblock %}

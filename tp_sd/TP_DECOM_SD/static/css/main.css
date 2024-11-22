@@ -2,6 +2,8 @@
 body {
   background-color: #f4f4f9;
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 h1, h2 {
@@ -65,6 +67,7 @@ h1, h2 {
   background-color: #007bff;
   color: white;
 }
+
 /* Estilo para palavras-chave */
 .badge {
   font-size: 0.9rem;
@@ -82,8 +85,9 @@ h1, h2 {
 .badge.text-dark {
   color: #343a40;
 }
+
 /* Estilo do resumo */
-.list-group-item{
+.list-group-item {
   width: 100%;
   height: auto;
 }
@@ -92,28 +96,103 @@ h1, h2 {
   word-wrap: break-word; /* Quebra palavras longas */
   white-space: pre-wrap; /* Mantém quebras de linha e adiciona quebra automática */
   margin-bottom: 10px; /* Espaçamento entre os resumos */
-
 }
 
 .list-group-item p span {
    margin-left: 10px;
 }
 .list-group-item {
-  margin-bottom: 10px; /* Espaçamento entre os itens da lista */
+  overflow: hidden; /* Impede que o conteúdo ultrapasse o limite */
+  max-width: 100%; /* Garante que o contêiner não exceda a área visível */
   padding: 15px;
+  box-sizing: border-box; /* Inclui padding no cálculo do tamanho */
 }
+
 
 .list-group-item em {
   display: block; /* Coloca o resumo em um bloco separado */
   margin-top: 5px;
 }
 
-.resume_text{
+.resume_text {
   font-style: italic;
   color: #6c757d;
+  word-wrap: break-word; /* Quebra automaticamente palavras grandes */
+  word-break: break-word; /* Força a quebra de palavras */
+  white-space: pre-wrap; /* Preserva espaços e quebras de linha no texto */
+  overflow-wrap: break-word; /* Compatibilidade extra */
+  display: block; /* Garante que cada resumo ocupe uma linha separada */
+  max-width: 100%; /* Impede que ultrapasse os limites do contêiner */
 }
 
 
 textarea {
-  width: 70%;
+  width: 100%;
+  max-width: 100%;
+}
+
+.badge.bg-secondary {
+  word-wrap: break-word; /* Quebra palavras longas automaticamente */
+  word-break: break-word; /* Força a quebra de palavras grandes */
+  white-space: normal; /* Permite a quebra de linha */
+  overflow-wrap: break-word; /* Adicional para compatibilidade */
+  display: inline-block; /* Garante que a badge respeite os limites */
+  max-width: 100%; /* Evita que a badge ultrapasse o contêiner */
+  text-align: center; /* Centraliza o texto dentro da badge */
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+  .container, .account-container {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 10px 10px;
+    font-size: 0.9rem;
+  }
+
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .form-container {
+    width: 100%;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2 {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .btn {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+  }
+
+  table, .list-group-item, textarea {
+    font-size: 0.8rem;
+  }
 }
