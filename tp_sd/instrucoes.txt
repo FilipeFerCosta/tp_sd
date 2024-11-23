@@ -1,3 +1,17 @@
+******** AVISO ******** 
+
+PARA UTILIZAR O DEBUG OFF, 
+CONFIGURE SEU PRÓPRIO BANCO DE DADOS POSTGRESQL
+
+
+AO CRIAR O SUPER USUÁRIO NO TERMINAL, 
+DEFINA O CARGO DE ADMINISTRADOR 
+NO PAINEL ADMINISTRATIVO DO DJANGO
+
+******** AVISO ******** 
+
+
+
 Para criar o ambiente virtual:
 python3 -m venv *nome*
 
@@ -46,8 +60,31 @@ python manage.py migrate
 -
 
 Para criar o super usuário é necessário os seguintes requisitos:
-Your password can’t be too similar to your other personal information.
-Your password must contain at least 8 characters.
-Your password can’t be a commonly used password.
-Your password can’t be entirely numeric.
-Sua senha deve conter pelo menos um dígito, uma letra maiúscula e uma letra minúscula.
+
+Sua senha não pode ser muito similar a outras informações pessoais suas.
+Sua senha deve conter pelo menos 8 caracteres.
+Sua senha não pode ser uma senha comumente usada.
+Sua senha não pode ser completamente numérica, deve conter pelo menos um dígito, uma letra maiúscula e uma letra minúscula.
+
+-
+
+Querys para dar permissão ao usuário no banco de dados 
+
+GRANT ALL PRIVILEGES ON SCHEMA public TO filipe;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO filipe;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO filipe;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO filipe;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO filipe;
+
+Confirme se as permissões estão corretas
+\du
+
+Dê permissão de super usuário
+ALTER USER filipe WITH SUPERUSER;
+
+\c *nome do schema* 
+
+após isso pode migrar 
+
+use o gunicorn para rodar em produção 
+gunicorn -c /caminho/para/sd/conf/gunicorn_config.py TP_DECOM_SD.wsgi --env DJANGO_SETTINGS_MODULE=TP_DECOM_SD.settings.production
