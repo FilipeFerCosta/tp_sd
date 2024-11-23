@@ -1,6 +1,7 @@
 from .base import *
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost' '10.0.0.214']
+# O IP privado é o da minha máquina, mude para o seu
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.0.0.214']
 
 INSTALLED_APPS += [
     'whitenoise.runserver_nostatic',  # 
