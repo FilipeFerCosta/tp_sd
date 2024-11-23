@@ -22,6 +22,9 @@ Para entrar no ambiente virtual:
 
 -
 
+instale o pacote no linux
+sudo apt install libpango1.0-0
+
 para instalar as dependências do django:
 pip install -r requirements.txt
 
