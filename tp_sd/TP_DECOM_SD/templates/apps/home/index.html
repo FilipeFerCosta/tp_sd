@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtSys Tech - Soluções Acadêmicas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-section {
+            background: url("{% static 'imagens/hero-image.jpg' %}") no-repeat center center/cover;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .btn-custom {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+        }
+        .content-section {
+            padding: 60px 0;
+        }
+        .service-card {
+            transition: transform 0.3s ease-in-out;
+        }
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+        .navbar-custom {
+            background-color: #000;
+        }
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        .mr-4 {
+            margin-right: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="#">ArtSys Tech</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% static 'psi/politica-seguranca.pdf' %}">PSI</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Descrição da Empresa -->
+<section id="descricao" class="content-section bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Descrição da Empresa</h2>
+        <p>A ArtSys Tech é uma empresa de tecnologia focada no desenvolvimento de sistemas web distribuídos para atender às necessidades específicas de gestão acadêmica. Com soluções projetadas para otimizar o cadastro e gerenciamento de artigos científicos, a empresa atua como parceira estratégica de departamentos de computação e instituições acadêmicas que buscam excelência e eficiência na organização de suas produções científicas.</p>
+        
+        <h3 class="mt-5">Público-Alvo</h3>
+        <p>Departamentos de Computação, instituições de ensino superior e centros de pesquisa que necessitam de soluções tecnológicas para gerenciar informações acadêmicas de forma ágil e confiável.</p>
+        
+        <h3 class="mt-5">Serviços Oferecidos</h3>
+        <p>Nosso objetivo é proporcionar soluções tecnológicas que otimizem a organização e o gerenciamento de informações acadêmicas, garantindo eficiência e confiabilidade às instituições atendidas. Abaixo, alguns dos nossos serviços:</p>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Desenvolvimento de Sistemas Web Distribuídos</h5>
+                        <p class="card-text">Soluções personalizadas para o cadastro, organização e busca de artigos acadêmicos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Integração e Suporte Técnico</h5>
+                        <p class="card-text">Serviços de integração com outras plataformas acadêmicas e suporte técnico contínuo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Análise de Dados Acadêmicos</h5>
+                        <p class="card-text">Ferramentas para relatórios e métricas que auxiliem na gestão e visualização da produção científica.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Consultoria em Transformação Digital Acadêmica</h5>
+                        <p class="card-text">Assessoria para digitalizar e modernizar processos acadêmicos relacionados à produção científica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
+            <a href="{% static 'psi/politica-seguranca.pdf' %}" class="btn btn-info" style="margin-left: auto;">Política de Segurança</a>
+        </div>        
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p>&copy; 2024 ArtSys Tech. Todos os direitos reservados.</p>
+        <a href="#" class="text-white">Política de Privacidade</a> | <a href="#" class="text-white">Termos de Serviço</a>
+    </div>
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -7,9 +7,19 @@ from TP_DECOM_SD.EnvioDoc.models import Documento
 from django.db.models import Q
 from django.views import View
 from TP_DECOM_SD.accounts.models import User
+from django.views.generic import TemplateView
 
 # View index
-# View index
+class HomePage(TemplateView):
+    homepage= "apps/home/index.html"
+
+    def get_template_names(self):
+        return "apps/home/index.html"
+    
+    def home_page_view(request):
+        return render(request, 'index.html')
+    
+
 class DocumentoListView(LoginRequiredMixin, ListView):
     model = Documento
     template_name = 'apps/home/listar_documentos.html'
@@ -92,3 +102,4 @@ class UserListView(LoginRequiredMixin, UserPassesTestMixin, View):
             messages.error(request, "Cargo inválido.")
 
         return redirect('listar_usuarios')  # Redireciona para a página da lista de usuários
+    

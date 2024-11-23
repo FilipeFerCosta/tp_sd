@@ -3,10 +3,13 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from .forms import DocumentoForm
 from .models import Documento
-from django.core.mail import send_mail
-from django.contrib.auth.models import User
 from dotenv import load_dotenv
 import os
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+import os
+
+
 
 # Carregar o arquivo .env
 load_dotenv()
@@ -38,29 +41,40 @@ class DocumentoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return context
 
     def form_valid(self, form):
+        # Processar a validação do formulário
         response = super().form_valid(form)
 
-        # Obtenha o objeto atualizado
+        # Obter o documento atualizado
         documento = self.object
-        
-        # Detalhes do e-mail
+
+        # Configurações do e-mail
         subject = f"Atualização no artigo: {documento.titulo}"
         message = (
             f"O artigo '{documento.titulo}' foi atualizado.\n\n"
             f"Resumo da alteração:\n"
-            f"{documento.descricao}\n\n"  # Adapte o campo para mostrar o conteúdo relevante
+            f"{documento.resumo}\n\n"
             f"Confira no sistema para mais detalhes."
         )
-        # Carregar o e-mail do remetente do .env
         from_email = os.getenv('EMAIL_HOST_USER')
+        
+        if not from_email:
+            raise ValueError("EMAIL_HOST_USER não configurado no .env")
+        
+        # Enviar e-mail para o destinatário fixo
+        recipient_list = ["rafarodrigues919@gmail.com"] #Troque de acordo a necessidade
 
-        # Enviar e-mails para todos os usuários
-        users = User.objects.all()
-        recipient_list = [user.email for user in users if user.email]
+        # Verificar se há destinatário
+        if not recipient_list:
+            return HttpResponse('Nenhum destinatário válido encontrado.') 
 
-        if recipient_list:  # Verifica se há destinatários com e-mails
-            send_mail(
-                subject, message, from_email, recipient_list, fail_silently=False
-            )
+        # Enviar e-mail
+        try:
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+        except BadHeaderError:
+            return HttpResponse('Header inválido encontrado ao tentar enviar o e-mail.')
+        except Exception as e:
+            # Logar o erro no console ou no sistema de logs
+            print(f"Erro ao enviar e-mail: {e}")
+            return HttpResponse('Ocorreu um problema ao enviar o e-mail.')
 
         return response

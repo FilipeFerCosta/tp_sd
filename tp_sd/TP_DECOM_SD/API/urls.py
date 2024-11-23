@@ -8,6 +8,4 @@ urlpatterns = [
     path('documentos/create/', DocumentoCreate.as_view(), name='documento-create'),  # New create endpoint
     path('documentos/delete/<int:id>', DocumentoDelete.as_view(), name='documento-delete'),  # New delete endpoint
 ]
-
-
 #exemplo de query para a busca ?q=teste%20qualquer
