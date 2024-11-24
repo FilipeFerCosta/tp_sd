@@ -90,4 +90,4 @@ ALTER USER filipe WITH SUPERUSER;
 após isso pode migrar 
 
 use o gunicorn para rodar em produção 
-gunicorn -c /caminho/para/sd/conf/gunicorn_config.py TP_DECOM_SD.wsgi --env DJANGO_SETTINGS_MODULE=TP_DECOM_SD.settings.production
+gunicorn -c /caminho/para/sd/conf/gunicorn_config.py TP_DECOM_SD.wsgi --env DJANGO_SETTINGS_MODULE=TP_DECOM_SD.settings.local
